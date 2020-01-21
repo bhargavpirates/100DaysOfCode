@@ -1,0 +1,195 @@
+Django TUtorial:
+================
+
+Have MVT Model (Model View Template)
+
+Django SetUP:
+-------------
+my machine is windows
+so i setup django according to my OS
+
+DjangoFramework  is a Python Based langugae
+So we need Python in our PC to work with DjangoforFramework
+
+Install -  Python 3.6
+Install VirtaulENV
+using : pip install virtualenvwrapper-win
+than setpup env :: mkvirtualenv test
+
+setup django ::
+pip install django
+
+django-admin --version
+
+
+Creating Project:
+-----------------
+mkdir djangoProjects
+cd  djangoProjects
+
+django-admin startproject bhargavDjango
+
+cd bhargavDjango
+ls
+
+then we can see (folder bhargavDjango,file manage.py )
+folder bhargavDjango contains :: __init__,settings,urls(handle urls),wsgi(used to deploy project on the server)
+
+we can run this project even though we didnot deployed
+because Django gives us lightweight server
+
+python manage.py runserver
+then it give local IPADDRESS : 
+and we can see your code frintend on that local server
+
+
+
+Frist APP in Django:
+--------------------
+Static Content : HTML,CSS,Javascript
+Dynamic Content : Django
+
+we can have different apps in one project
+
+**For entire Django Coding i am using VisualStudio Editor**
+in visula studio there will be terimal option there we can use cmdprmt,python env there
+BUT  we want to work on virtual env :: then in VS-terminal type WORKON <virtualenv_name>
+
+
+then type :: python manage.py startapp calc
+ then we will get calc folder in our existing Project
+ 
+ APP Folder Consist of :
+ __init__.py,admin.py,apps.py,models.py(used to hlold data),tests.py,views.py(handle request) files
+ 
+
+HOW DJANGO NAVIGATE:
+--------------------
+when we request to our url then it will search for url mappings in our main folder(bhargavDjango/wurls.py) ie
+/,/website/x,/website/x/y etc
+
+there it will check for the url paths if its finds one it will navigate to that path
+eg :: urlpatterns = [path('',include('calc.urls')),path('admin/', admin.site.urls),]
+Explanation of eg: it found that at "/" or " " at home page go to calc.urls path
+
+
+in calc.urls:: 
+urlpatterns = [path('',views.home,name='home')]
+
+then it think that in home page we need to call  this views.home function
+that is called as REQUEST
+we need to send RESPONSEfor that request using below code format
+
+def home(request):
+    return HttpResponse("helloWorld")
+    
+
+now refresh your local host in any of webrowser:
+output:: helloWorld
+
+
+Django Template Language (DTL)
+-------------------------------
+
+in django Dynamic Content can be done using HTML pages by TEMPLATES
+ie
+in Template we can have html pages which we can make  dynamic them
+
+
+CReate template Folder:
+and there write file.html
+
+to reflect those changes in code ::
+
+go to main bhargavDjango/settings there go to templates varbile
+and change the DIR varible value
+ie 'DIRS' : [os.path.join(BASE_DIR,'templates')]
+and go to views.py file and change by adding html file using RENDER MEthod
+ie by
+def home(request):
+    return render(request,'home.html')
+    
+
+For dynamic value use::
+def home(request):
+    return render(request,'home.html,{'name':'Bhargav'})
+
+and change that value in html also::
+<h1>Hello {{name}} !!!</h1>
+
+
+Django Template Language (DTL) Part2
+-------------------------------------
+create another file in Templates Folder
+
+file create and  press ! and click enter
+you get predefined code
+
+and now change backgroundcolor
+
+<body bgcolor='cyan'> 
+    {% block content %}
+
+    {% endblock %}
+ </body> 
+ 
+and include this change in the home.html :::
+ 
+{% extends 'base.html' %}
+{% block content %}
+<h1>Hello {{name}} !!!!!!!!!!!</h1>
+{% endblock %}
+ 
+ 
+ 
+Check its output:
+
+Adding TWO Numbers in Django:
+-----------------------------
+here we are doing Operation in our webpages
+
+for that we need form and get numbers to do ADD Oprtion on that
+
+<form action="add">
+    Enter 1st number : <input type="text" name="num1"><br>
+    Enter 2nd Number : <input type="text" name ="num2"><br>
+    <input type="submit">
+</form>
+
+now when we click on Submit button it need add two numbers
+
+but where do you do ADDITION Operation ??
+where you will print its result??
+
+2. 
+For printing results we are creating another file.html
+and printing result
+1.
+to do opertion we need to create another file in view
+and add urls in url.py
+ie by  path('add',views.add,name='add')
+
+def add(request):
+    val1  = request.GET['num1']
+    val2  = request.GET['num2']
+    res = int(val1)+int(val2)
+    return render(request,"result.html",{'result':res})
+
+    
+
+
+    
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
